@@ -1,23 +1,13 @@
 //Materia: Programación I, Paralelo 4
 //Autores: Julian Blacutt Troche, José Armando Sánchez Velarde
 //Fecha creación: 14/06/26
+//Grupo: 2
 //Nombre del Proyecto: Bomb Voyage Bro
 #include <iostream>
+#include "LibFuncionesUniversales.h"
+#include "Libdatosjugadores.h"
 
 using namespace std;
-
-struct DatosBomba
-{
-    int num_cables;//en toda dificultad
-    char color_cables[30]; //en la dificultad más alta
-    int num_botones; //en toda dificultad
-    char texto_botones[30]; //en "veremos" para dificultades media y alta
-    char codigo_num[30]; //en toda dificultad
-    char letras_ocultas[30]; //en "veremos" para dificultades media y alta 
-    char tipo_bomba[30]; //todavía en "veremos"
-    int baterias; //establecer orden o un EasterEgg
-    int interruptores; //todavía en "veremos"
-}; //Algunas mecánicas pueden llegar a ser expandidas o eliminadas según nuestra conveniencia
 
 void desplegarMenu();
 int main()
@@ -38,7 +28,6 @@ int main()
     cout<<"Junto a un compañero deberán ser buenos comunicándose y actuando"<<endl;
     cout<<"bajo presión, recuerda que... el tiempo corre >:)"<<endl;
     system("pause");
-    system("cls");
     desplegarMenu();
     return 0;
 }
@@ -50,9 +39,9 @@ void desplegarMenu()
         cout<<"MENÚ DE DIFICULTADES"<<endl;
         cout<<"--------------------"<<endl;
         cout<<"¿Qué tan experimentados son desarmando bombas?"<<endl;
-        cout<<"1. CARTUCHERO (NOVATO)"<<endl;
-        cout<<"2. C4 TR3RO (MEDIO)"<<endl;
-        cout<<"3. AMO DEL TSAR (PROFESIONAL)"<<endl;
+        cout<<"1. CARTUCHERO (NOVATO) [160s]"<<endl; //tiempo de resolucion 2:40min
+        cout<<"2. C4 TR3RO (MEDIO) [250s]"<<endl; //tiempo de resolución 4:10min
+        cout<<"3. AMO DEL TSAR (PROFESIONAL) [370s]"<<endl; //tiempo de resolución 6:10min
         cout<<"4. Salir del Programa"<<endl;
         cout<<"Ingrese una opción válida por favor: ";
         cin>>op;
