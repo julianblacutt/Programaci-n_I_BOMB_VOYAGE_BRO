@@ -4,7 +4,6 @@
 
 using namespace std;
 
-// Estructura de Datos de la Bomba e
 struct DatosBomba {
     int num_cables; 
     char color_cables[30]; 
@@ -16,19 +15,15 @@ struct DatosBomba {
     int baterias; 
 };
 
-// Variables Globales de Control de Juego
 int errores = 0;
 bool juego_terminado = false;
 bool bomba_desactivada = false;
 int tiempo_restante_segundos = 0;
 
-// Estado de resolución de módulos individuales
 bool modulo_cables_resuelto = false;
 bool modulo_botones_resuelto = false;
 bool modulo_codigo_resuelto = false;
 
-
-// Función para simular un valor aleatorio en un rango determinado
 int generarAleatorio(int min, int max) {
     if (min >= max) return min;
     return min + (rand() % (max - min + 1));
@@ -51,7 +46,6 @@ bool compararCadenas(const char* cad1, const char* cad2) {
     return true;
 }
 
-// Inversión manual de cadenas
 void invertirCadena(char* cad, int longitud) {
     int inicio = 0;
     int fin = longitud - 1;
@@ -64,38 +58,37 @@ void invertirCadena(char* cad, int longitud) {
     }
 }
 
-// --- HILO DE CRONÓMETRO/TEMPORIZADOR ---
+// FIJADO: Bucle corregido para evitar ciclos infinitos y actualizar la variable global
 void Cronometro(int tiempoSegundos)
 {
-    system("cls");
-    cout << "Iniciando conteo..." << endl;
-    for (int i = 1; i <= tiempoSegundos; i--)
+    for (int i = tiempoSegundos; i >= 0; i--)
     {
-        cout << i << " seg. " << "\r";
-        // El programa se "congela" aquí por 1 segundo (1000 milisegundos)
+        if (bomba_desactivada || errores >= 3) {
+            break; 
+        }
+        tiempo_restante_segundos = i;
         this_thread::sleep_for(chrono::seconds(1)); 
     }
-    cout << "TIEMPO TERMINADO" << endl;
+    if (tiempo_restante_segundos <= 0 && !bomba_desactivada) {
+        juego_terminado = true;
+    }
 }
 
-// --- GENERADOR DE CONFIGURACIÓN DE BOMBA ---
 void inicializarBombaAleatoria(DatosBomba &bomba, int dificultad) {
-    char banco_colores[4] = {'R', 'A', 'M', 'N'}; // Rojo, Azul, Amarillo, Negro
+    char banco_colores[4] = {'R', 'A', 'M', 'N'}; 
     char banco_letras[5] = {'O', 'A', 'D', 'T', 'S'};
     
-    // Regla del Easter Egg de Baterías
     bomba.baterias = 0;
-    if (dificultad == 1) { // Cartuchero: Alta probabilidad
-        if (generarAleatorio(1, 100) <= 40) { // 40% probabilidad
+    if (dificultad == 1) { 
+        if (generarAleatorio(1, 100) <= 40) { 
             bomba.baterias = generarAleatorio(1, 3);
         }
-    } else if (dificultad == 3) { // Amo del TSAR: Baja probabilidad
-        if (generarAleatorio(1, 100) <= 10) { // 10% probabilidad
+    } else if (dificultad == 3) { 
+        if (generarAleatorio(1, 100) <= 10) { 
             bomba.baterias = generarAleatorio(1, 2);
         }
     }
 
-    // Configuración de Cables
     if (dificultad == 1) {
         bomba.num_cables = 3;
     } else {
@@ -106,10 +99,9 @@ void inicializarBombaAleatoria(DatosBomba &bomba, int dificultad) {
     }
     bomba.color_cables[bomba.num_cables] = '\0';
 
-    // Configuración de Botones
     if (dificultad == 1) {
         bomba.num_botones = 1;
-        bomba.color_botones[0] = banco_colores[generarAleatorio(0, 2)]; // Evitamos negro a veces para dar jugabilidad
+        bomba.color_botones[0] = banco_colores[generarAleatorio(0, 2)]; 
         bomba.color_botones[1] = '\0';
         bomba.texto_botones[0] = '\0';
     } else {
@@ -129,13 +121,11 @@ void inicializarBombaAleatoria(DatosBomba &bomba, int dificultad) {
         }
     }
 
-    // Código Numérico (4 Dígitos siempre en formato texto)
     for (int i = 0; i < 4; i++) {
         bomba.codigo_num[i] = '0' + generarAleatorio(1, 9);
     }
     bomba.codigo_num[4] = '\0';
 
-    // Distintivo de la Bomba
     for(int i = 0; i < 5; i++) {
         bomba.distintivo_bomba[i] = banco_letras[generarAleatorio(0, 4)];
     }
@@ -165,15 +155,12 @@ void mostrarDatosBomba(const DatosBomba &bomba) {
     cout << "=============================================" << endl;
 }
 
-// --- INTELIGENCIA DE RESOLUCIÓN DE MÓDULOS ---
-
 void jugarCables(const DatosBomba &bomba, int dificultad) {
     cout << "\n--- MÓDULO: CABLES ---" << endl;
     cout << "Ingrese el indice del cable que desea cortar (0 a " << bomba.num_cables - 1 << "): ";
     int eleccion;
     cin >> eleccion;
 
-    // Obtener respuesta correcta lógica simulada según manual simplificado
     int correcto = 0;
     if (dificultad == 1) {
         int rojos = 0, azules = 0, amarillos = 0;
@@ -192,7 +179,6 @@ void jugarCables(const DatosBomba &bomba, int dificultad) {
             correcto = 1;
         }
     } else {
-        // Fallback básico para modularización avanzada C4-TR3RO / TSAR
         correcto = bomba.num_cables - 1; 
     }
 
@@ -201,7 +187,7 @@ void jugarCables(const DatosBomba &bomba, int dificultad) {
         modulo_cables_resuelto = true;
     } else {
         errores++;
-        cout << "¡CABLE INCORRECTO! Chispas y error registrado. (Errores: " << errores << "/3)" << endl;
+        cout << "¡CABLE INCORRECTO! (Errores: " << errores << "/3)" << endl;
     }
 }
 
@@ -230,7 +216,7 @@ void jugarBotones(const DatosBomba &bomba, int dificultad) {
         modulo_botones_resuelto = true;
     } else {
         errores++;
-        cout << "¡ACCION ERRONEA! El sistema rechazo la pulsacion. (Errores: " << errores << "/3)" << endl;
+        cout << "¡ACCION ERRONEA! (Errores: " << errores << "/3)" << endl;
     }
 }
 
@@ -270,25 +256,31 @@ void jugarCodigo(const DatosBomba &bomba, int dificultad) {
         modulo_codigo_resuelto = true;
     } else {
         errores++;
-        cout << "¡CODIGO ERRONEO! Acceso Denegado. (Errores: " << errores << "/3)" << endl;
+        cout << "¡CODIGO ERRONEO! (Errores: " << errores << "/3)" << endl;
     }
 }
 
-// --- CONTROL PRINCIPAL DEL MENÚ DE LA BOMBA ---
 void menuDesactivacionBomba(const DatosBomba &bomba, int dificultad) {
+    // Al iniciar una nueva partida, reiniciamos los flags lógicos
+    modulo_cables_resuelto = false;
+    modulo_botones_resuelto = false;
+    modulo_codigo_resuelto = false;
+    juego_terminado = false;
+    bomba_desactivada = false;
+    errores = 0;
+
     while (!juego_terminado && !bomba_desactivada) {
-        // Validar si el juego terminó por acumulación de fallos
         if (errores >= 3) {
             juego_terminado = true;
             break;
         }
 
-        // Condición de Victoria: Todas las secciones están completadas
         if (modulo_cables_resuelto && modulo_botones_resuelto && modulo_codigo_resuelto) {
             bomba_desactivada = true;
             break;
         }
 
+        system("cls"); // Limpia pantalla en cada iteración para refrescar el reloj dinámico en menú
         mostrarDatosBomba(bomba);
         cout << "\nTiempo Restante: " << tiempo_restante_segundos << " segundos. | Errores: " << errores << "/3" << endl;
         cout << "=== MENU DE SECCIONES DE SEGURIDAD ===" << endl;
@@ -313,23 +305,29 @@ void menuDesactivacionBomba(const DatosBomba &bomba, int dificultad) {
         switch (opcion) {
             case 1:
                 if (modulo_cables_resuelto) {
-                    cout << "\n[Aviso] Esta seccion ya fue resuelta. Volviendo al menu..." << endl;
+                    cout << "\n[Aviso] Esta seccion ya fue resuelta." << endl;
+                    system("pause");
                 } else {
                     jugarCables(bomba, dificultad);
+                    system("pause");
                 }
                 break;
             case 2:
                 if (modulo_botones_resuelto) {
-                    cout << "\n[Aviso] Esta seccion ya fue resuelta. Volviendo al menu..." << endl;
+                    cout << "\n[Aviso] Esta seccion ya fue resuelta." << endl;
+                    system("pause");
                 } else {
                     jugarBotones(bomba, dificultad);
+                    system("pause");
                 }
                 break;
             case 3:
                 if (modulo_codigo_resuelto) {
-                    cout << "\n[Aviso] Esta seccion ya fue resuelta. Volviendo al menu..." << endl;
+                    cout << "\n[Aviso] Esta seccion ya fue resuelta." << endl;
+                    system("pause");
                 } else {
                     jugarCodigo(bomba, dificultad);
+                    system("pause");
                 }
                 break;
             case 4:
@@ -337,12 +335,15 @@ void menuDesactivacionBomba(const DatosBomba &bomba, int dificultad) {
                     cout << "\n¡Has retirado las baterias fisicamente!" << endl;
                     cout << "La bomba se apaga por falta de energia de soporte." << endl;
                     bomba_desactivada = true;
+                    system("pause");
                 } else {
                     cout << "Opcion no valida." << endl;
+                    system("pause");
                 }
                 break;
             default:
-                cout << "Opcion invalida en el panel de control." << endl;
+                cout << "Opcion invalida." << endl;
+                system("pause");
                 break;
         }
     }

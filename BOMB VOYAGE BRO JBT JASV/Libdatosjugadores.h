@@ -10,16 +10,17 @@ struct DatosJugadores
     char nombre_player1[30];
     char nombre_player2[30];
 };
+
 void JugadoresCARTUCHERO() 
 {
     DatosJugadores team;
     ofstream archivo;
 
     cout << "Ahora pueden llenar los datos" << endl;
-    cout<<"Ingresen el nombre del equipo: ";
-    cin.getline(team.nombre_equipo,30);
+    cout << "Ingresen el nombre del equipo: ";
+    cin.getline(team.nombre_equipo, 30);
 
-    cout << "\nIngrese su nombre J1: ";
+    cout << "Ingrese su nombre J1: ";
     cin.getline(team.nombre_player1, 30);
 
     cout << "Ingrese su nombre J2: ";
@@ -31,16 +32,17 @@ void JugadoresCARTUCHERO()
 
     cout << "Se han registrado los datos de forma correcta." << endl;
 }
+
 void JugadoresC4_TR3RO() 
 {
     DatosJugadores team;
     ofstream archivo;
 
     cout << "Ahora pueden llenar los datos" << endl;
-    cout<<"Ingresen el nombre del equipo: ";
-    cin.getline(team.nombre_equipo,30);
+    cout << "Ingresen el nombre del equipo: ";
+    cin.getline(team.nombre_equipo, 30);
 
-    cout << "\nIngrese su nombre J1: ";
+    cout << "Ingrese su nombre J1: ";
     cin.getline(team.nombre_player1, 30);
 
     cout << "Ingrese su nombre J2: ";
@@ -52,16 +54,17 @@ void JugadoresC4_TR3RO()
 
     cout << "Se han registrado los datos de forma correcta." << endl;
 }
+
 void JugadoresAMODELTSAR() 
 {
     DatosJugadores team;
     ofstream archivo;
 
     cout << "Ahora pueden llenar los datos" << endl;
-    cout<<"Ingresen el nombre del equipo: ";
-    cin.getline(team.nombre_equipo,30);
+    cout << "Ingresen el nombre del equipo: ";
+    cin.getline(team.nombre_equipo, 30);
 
-    cout << "\nIngrese su nombre J1: ";
+    cout << "Ingrese su nombre J1: ";
     cin.getline(team.nombre_player1, 30);
 
     cout << "Ingrese su nombre J2: ";
@@ -73,7 +76,8 @@ void JugadoresAMODELTSAR()
 
     cout << "Se han registrado los datos de forma correcta." << endl;
 }
-void reporteDoc1() //reporte cartuchero
+
+void reporteDoc1() 
 {
     ifstream archCartuchero;
     DatosJugadores team;
@@ -87,18 +91,18 @@ void reporteDoc1() //reporte cartuchero
     }
 
     cout << "Los Héroes de la dificultad CARTUCHERO" << endl;
-    cout << "======================================"<<endl;
+    cout << "======================================" << endl;
 
     while (archCartuchero.read((char*)&team, sizeof(DatosJugadores))) 
     {
-
-        cout << "\nNombre equipo: "<< team.nombre_equipo << endl;
-        cout << "Jugador1: "<< team.nombre_player1 << endl;
-        cout << "Jugador2: "<< team.nombre_player2 << endl;
+        cout << "\nNombre equipo: " << team.nombre_equipo << endl;
+        cout << "Jugador1: " << team.nombre_player1 << endl;
+        cout << "Jugador2: " << team.nombre_player2 << endl;
     }
     archCartuchero.close();
 }
-void reporteDoc2() //reporte c4_tr3ro
+
+void reporteDoc2() 
 {
     ifstream archC4tr3ro;
     DatosJugadores team;
@@ -112,18 +116,18 @@ void reporteDoc2() //reporte c4_tr3ro
     }
 
     cout << "Los Héroes de la dificultad C4-TR3RO" << endl;
-    cout << "======================================"<<endl;
+    cout << "======================================" << endl;
 
     while (archC4tr3ro.read((char*)&team, sizeof(DatosJugadores))) 
     {
-
-        cout << "\nNombre equipo: "<< team.nombre_equipo << endl;
-        cout << "Jugador1: "<< team.nombre_player1 << endl;
-        cout << "Jugador2: "<< team.nombre_player2 << endl;
+        cout << "\nNombre equipo: " << team.nombre_equipo << endl;
+        cout << "Jugador1: " << team.nombre_player1 << endl;
+        cout << "Jugador2: " << team.nombre_player2 << endl;
     }
     archC4tr3ro.close();
 }
-void reporteDoc3() //reporte amo del tsar
+
+void reporteDoc3() 
 {
     ifstream archAmodelTsar;
     DatosJugadores team;
@@ -137,14 +141,13 @@ void reporteDoc3() //reporte amo del tsar
     }
 
     cout << "Los Héroes de la dificultad AMO DEL TSAR" << endl;
-    cout << "======================================"<<endl;
+    cout << "======================================" << endl;
 
     while (archAmodelTsar.read((char*)&team, sizeof(DatosJugadores))) 
     {
-
-        cout << "\nNombre equipo: "<< team.nombre_equipo << endl;
-        cout << "Jugador1: "<< team.nombre_player1 << endl;
-        cout << "Jugador2: "<< team.nombre_player2 << endl;
+        cout << "\nNombre equipo: " << team.nombre_equipo << endl;
+        cout << "Jugador1: " << team.nombre_player1 << endl;
+        cout << "Jugador2: " << team.nombre_player2 << endl;
     }
     archAmodelTsar.close();
 }
