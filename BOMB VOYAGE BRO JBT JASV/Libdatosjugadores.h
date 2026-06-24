@@ -89,7 +89,7 @@ void reporteDoc1()
         cout << "No existen registros en el sistema." << endl;
         return;
     }
-
+    system("cls");
     cout << "Los Héroes de la dificultad CARTUCHERO" << endl;
     cout << "======================================" << endl;
 
@@ -114,7 +114,7 @@ void reporteDoc2()
         cout << "No existen registros en el sistema." << endl;
         return;
     }
-
+    system("cls");
     cout << "Los Héroes de la dificultad C4-TR3RO" << endl;
     cout << "======================================" << endl;
 
@@ -139,7 +139,7 @@ void reporteDoc3()
         cout << "No existen registros en el sistema." << endl;
         return;
     }
-
+    system("cls");
     cout << "Los Héroes de la dificultad AMO DEL TSAR" << endl;
     cout << "======================================" << endl;
 

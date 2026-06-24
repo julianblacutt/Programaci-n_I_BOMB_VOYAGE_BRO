@@ -84,7 +84,7 @@ void inicializarBombaAleatoria(DatosBomba &bomba, int dificultad) {
             bomba.baterias = generarAleatorio(1, 3);
         }
     } else if (dificultad == 3) { 
-        if (generarAleatorio(1, 100) <= 10) { 
+        if (generarAleatorio(1, 100) <= 60) { 
             bomba.baterias = generarAleatorio(1, 2);
         }
     }

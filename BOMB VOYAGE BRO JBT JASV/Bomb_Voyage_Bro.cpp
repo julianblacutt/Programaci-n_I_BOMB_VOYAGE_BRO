@@ -17,6 +17,7 @@ int main()
 {
     system("chcp 65001");
     system("cls");
+    srand(time(0));
     cout << "ADVERTENCIA: Previo a iniciar el juego usted necesita el manual de" << endl;
     cout << "desarmado de bombas descargado en PDF o en físico. Mucha suerte!" << endl;
     system("pause");
